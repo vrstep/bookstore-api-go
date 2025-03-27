@@ -10,6 +10,8 @@ import (
 
 var authors = []models.Author{
 	{ID: 1, Name: "J.R.R. Tolkien"},
+	{ID: 2, Name: "George R.R. Martin"},
+	{ID: 3, Name: "J.K. Rowling"},
 }
 
 func GetAuthors(c *gin.Context) {

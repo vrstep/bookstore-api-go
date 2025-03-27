@@ -10,6 +10,8 @@ import (
 
 var categories = []models.Category{
 	{ID: 1, Name: "Fiction"},
+	{ID: 2, Name: "Fantasy"},
+	{ID: 3, Name: "Children"},
 }
 
 func GetCategories(c *gin.Context) {
