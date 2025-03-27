@@ -93,8 +93,33 @@ func PostBooks(c *gin.Context) {
 	var newBook models.Book
 
 	if err := c.BindJSON(&newBook); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid request body"})
 		return
 	}
+
+	// Input validation
+	if newBook.Title == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Title is required"})
+		return
+	}
+
+	if newBook.AuthorID == 0 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "AuthorID is required"})
+		return
+	}
+
+	if newBook.CategoryID == 0 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "CategoryID is required"})
+		return
+	}
+
+	if newBook.Price <= 0 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Price must be greater than zero"})
+		return
+	}
+
+	// Assign a new ID to the book
+	newBook.ID = len(books) + 1
 
 	books = append(books, newBook)
 	c.IndentedJSON(http.StatusCreated, newBook)
