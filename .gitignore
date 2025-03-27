@@ -1,0 +1,32 @@
+# Ignore compiled binaries
+*.exe
+*.out
+*.so
+*.dll
+*.dylib
+*.a
+*.o
+
+# Ignore Go workspace file (optional)
+go.work
+go.work.sum
+
+# Ignore vendor directory (optional)
+vendor/
+
+# Ignore editor and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.test
+coverage.*
+*.coverprofile
+*.cov
+bin/
+dist/
