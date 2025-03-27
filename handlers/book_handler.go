@@ -143,3 +143,54 @@ func GetBookByID(c *gin.Context) {
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "book not found"})
 }
+
+func UpdateBook(c *gin.Context) {
+	id := c.Param("id")
+
+	// Convert id to int
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "invalid book ID"})
+		return
+	}
+
+	var updatedBook models.Book
+	if err := c.BindJSON(&updatedBook); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid request body"})
+		return
+	}
+
+	// Find the book and update it
+	for i, book := range books {
+		if book.ID == idInt {
+			// Update the book
+			books[i] = updatedBook
+			c.IndentedJSON(http.StatusOK, updatedBook)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "book not found"})
+}
+
+func DeleteBook(c *gin.Context) {
+	id := c.Param("id")
+
+	// Convert id to int
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "invalid book ID"})
+		return
+	}
+
+	for i, book := range books {
+		if book.ID == idInt {
+			// Delete the book
+			books = append(books[:i], books[i+1:]...)
+			c.IndentedJSON(http.StatusOK, gin.H{"message": "book deleted"})
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "book not found"})
+}

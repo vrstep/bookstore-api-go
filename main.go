@@ -15,6 +15,8 @@ func main() {
 	router.GET("/books", handlers.GetBooks)
 	router.POST("/books", handlers.PostBooks)
 	router.GET("/books/:id", handlers.GetBookByID)
+	router.PUT("/books/:id", handlers.UpdateBook)
+	router.DELETE("/books/:id", handlers.DeleteBook)
 
 	// Authors
 	router.GET("/authors", handlers.GetAuthors)
