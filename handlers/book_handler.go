@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"example/bookstore_api/models"
 
@@ -31,8 +32,15 @@ func PostBooks(c *gin.Context) {
 func GetBookByID(c *gin.Context) {
 	id := c.Param("id")
 
+	// Convert id to int
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "invalid book ID"})
+		return
+	}
+
 	for _, book := range books {
-		if string(book.ID) == id {
+		if book.ID == idInt { // Compare int with int
 			c.IndentedJSON(http.StatusOK, book)
 			return
 		}
